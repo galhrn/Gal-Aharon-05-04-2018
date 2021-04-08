@@ -40,7 +40,7 @@ const AutoComplete = ({ setLocation }) => {
 
     (async () => {
       const response = await fetch(
-        `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${term}`
+        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${term}`
       );
       const countries = await response.json();
       if (active)

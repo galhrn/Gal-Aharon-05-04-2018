@@ -16,7 +16,7 @@ export const fetchCurrentLocation = (cityName) => {
   return async (dispatch) => {
     return axios
       .get(
-        `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_KEY}&q=${cityName}`
+        `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_KEY}&q=${cityName}`
       )
       .then((res) => {
         if (res.data[0]) {
@@ -44,7 +44,7 @@ export const fetchCurrentWeather = (locationKey) => {
   return async (dispatch) => {
     return axios
       .get(
-        `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`
+        `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`
       )
       .then((res) => {
         dispatch({
@@ -68,7 +68,7 @@ export const fetchFiveDaysForecast = (locationKey) => {
   return async (dispatch) => {
     return axios
       .get(
-        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`
       )
       .then((res) => {
         dispatch({
