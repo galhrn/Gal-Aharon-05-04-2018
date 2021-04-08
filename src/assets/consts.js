@@ -1,4 +1,4 @@
-export const API_KEY = "Bfxky9xqV7951oHn6ukkSEgYUgLcN0p6";
+export const API_KEY = "CTvqzboUhFkWloAQFRIBufFllAiQv8uc";
 
 export const TEL_AVIV = "tel aviv";
 export const CELCIUS_SIGN = "C°";
