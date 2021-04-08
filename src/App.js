@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToFavoriteList } from "./redux/actions/favoritesActions";
+import NavigationContainer from "./containers/NavigationContainer";
+import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
+import { LIGHT } from "./assets/consts";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const Main = () => {
+  const [selectedTheme, setSelectedTheme] = useState(LIGHT);
+  const dispatch = useDispatch();
+
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: selectedTheme,
+        },
+      }),
+    [selectedTheme]
   );
-}
 
-export default App;
+  useEffect(() => {
+    for (let [, value] of Object.entries(localStorage)) {
+      dispatch(addToFavoriteList(JSON.parse(value)));
+    }
+  }, []);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NavigationContainer
+        theme={selectedTheme}
+        setSelectedTheme={setSelectedTheme}
+      />
+    </ThemeProvider>
+  );
+};
+
+export default Main;
