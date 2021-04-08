@@ -1,7 +1,7 @@
 # Weather App
 
-responsive, web app in react that shows the weather of some city. 
-The user should be able to search for a city and save it to favorites
+Responsive web app in react that shows the weather of some city. 
+The user able to search for a city and save it to favorites.
 
 ## API
 AccuWeather
@@ -9,6 +9,10 @@ AccuWeather
 location autocomplete
 current weather
 5-day daily forecast
+
+### Features:
+Dark-mode
+AutoComplete Search
 
 ### 3rd party libraries
 Material Ui
