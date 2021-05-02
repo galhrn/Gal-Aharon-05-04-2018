@@ -11,14 +11,15 @@ current weather
 5-day daily forecast
 
 ### Features:
-Dark-mode
 AutoComplete Search
+Responsive Web Design (CSS Grid, Flex, Relative units)
+Keyframes
 
 ### 3rd party libraries
-Material Ui
+Material Ui (With MakeStyle Hooks)
 Axios
 Moment
 react-simple-toasts
 validator
 
-![image](https://user-images.githubusercontent.com/77960372/114025676-0e691100-987e-11eb-8a3b-95ba90d43f34.png)
+![image](https://user-images.githubusercontent.com/77960372/116805549-ecd31080-ab2f-11eb-9669-f46b781f042f.png)
