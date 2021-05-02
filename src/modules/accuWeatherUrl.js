@@ -1,5 +1,5 @@
 const accuWeather = (() => {
-  const API_KEY = "YqXmzAWhhqgCdFStrmeAv7AzUzEOGH5g";
+  const API_KEY = "YErDUivM5BIBmePKyClDg2KLOV3RgnnP";
   const baseUrl = "https://dataservice.accuweather.com";
   const filesUrl = "https://developer.accuweather.com/sites/default/files/";
 
