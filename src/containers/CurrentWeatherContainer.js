@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import WeatherCard from "../components/WeatherCard";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Box, Typography, Paper } from "@material-ui/core";
+import { Box, Paper } from "@material-ui/core";
 import FavoriteToggle from "../components/FavoriteToggle";
 
 import { useDispatch } from "react-redux";
@@ -11,12 +10,39 @@ import {
 } from "../redux/actions/favoritesActions";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  paper: {
-    padding: "12px 12px 24px 24px",
+  root: {
+    padding: "1em",
+    backgroundColor: "rgba(255,255,255,0.8)",
+    borderRadius: "1em",
   },
+  paper: {},
   control: {
-    padding: theme.spacing(2),
+    padding: "1em",
+  },
+
+  header: {},
+  title: {
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+  },
+
+  subTitle: {
+    fontSize: "1rem",
+    color: theme.palette.grey[400],
+    marginLeft: "1",
+  },
+
+  temperature: {
+    fontSize: "3rem",
+    color: theme.palette.primary.main,
+  },
+
+  imageContainer: {
+    paddingRight: "1em",
+  },
+
+  image: {
+    width: "100%",
   },
 }));
 
@@ -44,44 +70,29 @@ const CurrentWeather = ({ currentWeather, fiveDaysForecast }) => {
   };
 
   return (
-    <Paper variant="outlined" className={classes.paper}>
-      <Box
-        component="span"
-        display="flex"
-        style={{ padding: "24px 24px 48px 0px" }}
-      >
-        <Box>
+    <Paper className={classes.root} elevation={0}>
+      <Box component="span" display="flex">
+        <Box className={classes.imageContainer}>
           <img
+            className={classes.image}
             src={`https://developer.accuweather.com/sites/default/files/${
               currentWeather.icon < 10 ? "0" : ""
             }${currentWeather.icon}-s.png`}
+            alt="weather-icon"
           />
         </Box>
         <Box flexGrow={1}>
-          <Typography variant="h5" component="h2">
-            {currentWeather.title}
-          </Typography>
+          <Box className={classes.header}>
+            <Box className={classes.title}>{currentWeather.title}</Box>
+            <Box className={classes.subTitle}>{currentWeather.weatherText}</Box>
+          </Box>
 
-          <Typography variant="body1" component="span">
-            {currentWeather.weatherText}
-          </Typography>
-
-          <Typography variant="h4" component="h2" color={"primary"}>
+          <Box className={classes.temperature}>
             {currentWeather.temperature}
-          </Typography>
+          </Box>
         </Box>
         {<FavoriteToggle isFavorite={isFavorite} onToggle={onFavoriteToggle} />}
       </Box>
-      <Grid container className={classes.root} spacing={3}>
-        {fiveDaysForecast.map((item) => (
-          <WeatherCard
-            key={item.id}
-            item={item}
-            isFavorite={false}
-            onToggle={() => {}}
-          />
-        ))}
-      </Grid>
     </Paper>
   );
 };

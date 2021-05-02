@@ -5,19 +5,14 @@ import {
 } from "../types";
 import axios from "axios";
 
-import {
-  API_KEY,
-  LOCATION_ERROR,
-  LOCATION_NOT_FOUND,
-} from "../../assets/consts";
+import { LOCATION_ERROR, LOCATION_NOT_FOUND } from "../../assets/consts";
 import toast from "react-simple-toasts";
+import accuWeatherUrl from "../../modules/accuWeatherUrl";
 
 export const fetchCurrentLocation = (cityName) => {
   return async (dispatch) => {
     return axios
-      .get(
-        `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_KEY}&q=${cityName}`
-      )
+      .get(accuWeatherUrl.currentLocation(cityName))
       .then((res) => {
         if (res.data[0]) {
           dispatch({
@@ -43,9 +38,7 @@ export const fetchCurrentLocation = (cityName) => {
 export const fetchCurrentWeather = (locationKey) => {
   return async (dispatch) => {
     return axios
-      .get(
-        `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`
-      )
+      .get(accuWeatherUrl.currentWeather(locationKey))
       .then((res) => {
         dispatch({
           type: GET_CURRENT_WEATHER,
@@ -67,9 +60,7 @@ export const fetchCurrentWeather = (locationKey) => {
 export const fetchFiveDaysForecast = (locationKey) => {
   return async (dispatch) => {
     return axios
-      .get(
-        `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${API_KEY}`
-      )
+      .get(accuWeatherUrl.fiveDaysForecast(locationKey))
       .then((res) => {
         dispatch({
           type: GET_FIVE_DAYS_FORECAST,

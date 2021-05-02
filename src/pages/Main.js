@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, CircularProgress, Container } from "@material-ui/core";
+import { CircularProgress, makeStyles } from "@material-ui/core";
 import CurrentWeatherContainer from "../containers/CurrentWeatherContainer";
 import { CELCIUS_SIGN } from "../assets/consts";
 import moment from "moment";
+import WeatherCard from "../components/WeatherCard";
 
 import {
   fetchCurrentLocation,
@@ -14,6 +15,49 @@ import {
 import { navigateToHomeScreen } from "../redux/actions/navigateAction";
 
 import AutoCompleteInput from "../components/AutoCompleteInput";
+
+const useStyle = makeStyles((theme) => ({
+  root: {
+    display: "grid",
+    gridGap: "1rem",
+
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "1fr",
+      gridTemplateRows: "auto",
+      gridTemplateAreas: `"search" "current " "card1" "card2" "card3" "card4" "card5"`,
+    },
+
+    [theme.breakpoints.up("sm")]: {
+      gridTemplateColumns: "repeat(5, 1fr)",
+      gridTemplateRows: "auto",
+      gridTemplateAreas: `"search search search search search"
+                          "current current current current current"
+                          "card1 card2 card3 card4 card5"`,
+    },
+  },
+
+  search: {
+    gridArea: "search",
+  },
+  current: {
+    gridArea: "current",
+  },
+  card1: {
+    gridArea: "card1",
+  },
+  card2: {
+    gridArea: "card2",
+  },
+  card3: {
+    gridArea: "card3",
+  },
+  card4: {
+    gridArea: "card4",
+  },
+  card5: {
+    gridArea: "card5",
+  },
+}));
 
 const Main = ({ defaultLocation }) => {
   const { currentLocationResponse } = useSelector((state) => state.apiReducer);
@@ -27,6 +71,7 @@ const Main = ({ defaultLocation }) => {
   const [fiveDaysForecastLoaded, setFiveDaysForecastLoaded] = useState(false);
 
   const [locationSearchTerm, setLocationSearchTerm] = useState(defaultLocation);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -99,6 +144,7 @@ const Main = ({ defaultLocation }) => {
 
     setCurrentWeatherLoaded(true);
     setFiveDaysForecastLoaded(true);
+    if (isLoading) setIsLoading(false);
   };
 
   const convertAndRoundFahrenheit = (fahrenheit) => {
@@ -110,20 +156,30 @@ const Main = ({ defaultLocation }) => {
     return moment(date).format("dddd").substring(0, 3);
   };
 
-  const MainContent = () => {
-    return (
-      <Box>
-        <Box style={{ marginBottom: 24 }}>
-          <AutoCompleteInput
-            setLocation={(cityName) => setLocationSearchTerm(cityName)}
-          />
-        </Box>
+  const setLocation = (searchTerm) => {
+    setIsLoading(true);
+    setLocationSearchTerm(searchTerm);
+  };
 
-        <CurrentWeatherContainer
-          currentWeather={currentWeatherObject}
-          fiveDaysForecast={fiveDaysForecastArray}
-        />
-      </Box>
+  const MainContent = () => {
+    const classes = useStyle();
+
+    return (
+      <div className={classes.root}>
+        <div className={classes.search}>
+          <AutoCompleteInput setLocation={setLocation} />
+        </div>
+
+        <div className={classes.current}>
+          <CurrentWeatherContainer currentWeather={currentWeatherObject} />
+        </div>
+
+        {fiveDaysForecastArray.map((item, index) => (
+          <div key={item.id} className={classes[`card${index + 1}`]}>
+            <WeatherCard item={item} isFavorite={false} onToggle={() => {}} />
+          </div>
+        ))}
+      </div>
     );
   };
 
@@ -135,7 +191,7 @@ const Main = ({ defaultLocation }) => {
     );
   };
 
-  return currentWeatherLoaded && fiveDaysForecastLoaded ? (
+  return currentWeatherLoaded && fiveDaysForecastLoaded && !isLoading ? (
     <MainContent />
   ) : (
     <Loading />

@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { TextField, CircularProgress } from "@material-ui/core";
+import accuWeatherUrl from "../modules/accuWeatherUrl";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { API_KEY } from "../assets/consts";
 import fetch from "cross-fetch";
 import toast from "react-simple-toasts";
 import validator from "validator";
+import { TextField, CircularProgress, makeStyles } from "@material-ui/core";
+import { SEARCH_IN_ENGLISH } from "../assets/consts";
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: "transparent",
+    marginBottom: "1em",
+  },
+});
 
 const AutoComplete = ({ setLocation }) => {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [term, setTerm] = useState("");
@@ -24,7 +33,7 @@ const AutoComplete = ({ setLocation }) => {
       searchTerm ? setOpen(true) : setOpen(false);
       setTerm(searchTerm);
     } else {
-      toast("Please search in English only", 2000);
+      toast(SEARCH_IN_ENGLISH, 2000);
     }
   };
 
@@ -35,22 +44,15 @@ const AutoComplete = ({ setLocation }) => {
   };
 
   useEffect(() => {
-    let active = true;
-    if (!loading) return undefined;
+    if (term) {
+      (async () => {
+        const response = await fetch(accuWeatherUrl.autocomplete(term));
 
-    (async () => {
-      const response = await fetch(
-        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&q=${term}`
-      );
-      const countries = await response.json();
-      if (active)
+        const countries = await response.json();
         setOptions(Object.keys(countries).map((key) => countries[key]));
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
+      })();
+    }
+  }, [term]);
 
   useEffect(() => {
     if (!open) setOptions([]);
@@ -62,40 +64,43 @@ const AutoComplete = ({ setLocation }) => {
   };
 
   return (
-    <Autocomplete
-      open={open}
-      onClose={onClose}
-      onChange={(event, value) => {
-        setLocation(value.LocalizedName.toLowerCase());
-      }}
-      getOptionSelected={(option, value) =>
-        option.LocalizedName === value.LocalizedName
-      }
-      getOptionLabel={(option) => option.LocalizedName}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <form onSubmit={onSearchSubmit}>
-          <TextField
-            onChange={onInputChange}
-            {...params}
-            label="Search..."
-            variant="outlined"
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {loading ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
-            }}
-          />
-        </form>
-      )}
-    />
+    <div className={classes.root} elevation={0}>
+      <Autocomplete
+        open={open}
+        onClose={onClose}
+        onChange={(event, value) => {
+          setLocation(value.LocalizedName.toLowerCase());
+        }}
+        getOptionSelected={(option, value) =>
+          option.LocalizedName === value.LocalizedName
+        }
+        getOptionLabel={(option) => option.LocalizedName}
+        options={options}
+        loading={loading}
+        renderInput={(params) => (
+          <form onSubmit={onSearchSubmit}>
+            <TextField
+              className={classes.textField}
+              onChange={onInputChange}
+              {...params}
+              label="Search for cities..."
+              variant="standard"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <React.Fragment>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </React.Fragment>
+                ),
+              }}
+            />
+          </form>
+        )}
+      />
+    </div>
   );
 };
 

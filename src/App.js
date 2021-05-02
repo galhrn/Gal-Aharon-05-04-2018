@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addToFavoriteList } from "./redux/actions/favoritesActions";
-import NavigationContainer from "./containers/NavigationContainer";
-import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
-import { LIGHT } from "./assets/consts";
+import NavBar from "./components/NavBar";
+import { CssBaseline, makeStyles, Box } from "@material-ui/core";
 
-const Main = () => {
-  const [selectedTheme, setSelectedTheme] = useState(LIGHT);
+const useStyle = makeStyles((theme) => ({
+  root: {
+    background:
+      "url(https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6) no-repeat",
+    backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    [theme.breakpoints.up("sm")]: {
+      height: "100vh",
+    },
+  },
+}));
+
+const App = () => {
+  const classes = useStyle();
   const dispatch = useDispatch();
-
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: selectedTheme,
-        },
-      }),
-    [selectedTheme]
-  );
 
   useEffect(() => {
     for (let [, value] of Object.entries(localStorage)) {
@@ -26,14 +27,13 @@ const Main = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
-      <NavigationContainer
-        theme={selectedTheme}
-        setSelectedTheme={setSelectedTheme}
-      />
-    </ThemeProvider>
+      <Box className={classes.root}>
+        <NavBar />
+      </Box>
+    </div>
   );
 };
 
-export default Main;
+export default App;
