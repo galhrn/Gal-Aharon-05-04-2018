@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/Gal-Aharon-05-04-2021/static/js/main.09d0aae5.chunk.js",
-    "main.js.map": "/Gal-Aharon-05-04-2021/static/js/main.09d0aae5.chunk.js.map",
+    "main.js": "/Gal-Aharon-05-04-2021/static/js/main.7cf314db.chunk.js",
+    "main.js.map": "/Gal-Aharon-05-04-2021/static/js/main.7cf314db.chunk.js.map",
     "runtime-main.js": "/Gal-Aharon-05-04-2021/static/js/runtime-main.a650e022.js",
     "runtime-main.js.map": "/Gal-Aharon-05-04-2021/static/js/runtime-main.a650e022.js.map",
-    "static/js/2.21fad855.chunk.js": "/Gal-Aharon-05-04-2021/static/js/2.21fad855.chunk.js",
-    "static/js/2.21fad855.chunk.js.map": "/Gal-Aharon-05-04-2021/static/js/2.21fad855.chunk.js.map",
+    "static/js/2.96f89d49.chunk.js": "/Gal-Aharon-05-04-2021/static/js/2.96f89d49.chunk.js",
+    "static/js/2.96f89d49.chunk.js.map": "/Gal-Aharon-05-04-2021/static/js/2.96f89d49.chunk.js.map",
     "index.html": "/Gal-Aharon-05-04-2021/index.html",
-    "static/js/2.21fad855.chunk.js.LICENSE.txt": "/Gal-Aharon-05-04-2021/static/js/2.21fad855.chunk.js.LICENSE.txt"
+    "static/js/2.96f89d49.chunk.js.LICENSE.txt": "/Gal-Aharon-05-04-2021/static/js/2.96f89d49.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a650e022.js",
-    "static/js/2.21fad855.chunk.js",
-    "static/js/main.09d0aae5.chunk.js"
+    "static/js/2.96f89d49.chunk.js",
+    "static/js/main.7cf314db.chunk.js"
   ]
 }
