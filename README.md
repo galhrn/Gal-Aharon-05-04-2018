@@ -3,6 +3,9 @@
 Responsive web app in react that shows the weather of some city.
 The user able to search for a city and save it to favorites.
 
+![image](https://user-images.githubusercontent.com/77960372/116805549-ecd31080-ab2f-11eb-9669-f46b781f042f.png)
+
+
 ## API
 
 AccuWeather
@@ -27,4 +30,3 @@ Moment
 react-simple-toasts
 validator
 
-![image](https://user-images.githubusercontent.com/77960372/116805549-ecd31080-ab2f-11eb-9669-f46b781f042f.png)
